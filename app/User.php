@@ -36,4 +36,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles(){
+        return $this->belongsToMany('App\Role');
+    }
+
+    public function competences(){
+        return $this->belongsToMany('App\Competences');
+    }
+
+    // Permet de récupérer le nom du rôle (utiliser dans le Provider)
+    public function isAdmin(){
+        return $this->roles()->where('nom','admin')->first();
+    }
+
+    public function hasAnyRole(array $roles){
+        return $this->roles()->whereIn('nom', $roles)->first();
+    }
 }

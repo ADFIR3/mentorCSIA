@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function (){
+    Route::resource('users', 'UsersController');
+});
+
+Route::name('U')->group(function (){
+    Route::resource('listeMentor', 'listMentorController');
+});
+
+Route::name('U')->group(function (){
+    Route::resource('listeMentorer', 'listMentorerController');
+});
