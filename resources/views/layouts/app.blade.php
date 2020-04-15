@@ -12,12 +12,15 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
 </head>
 <body>
     <div id="app">
@@ -64,6 +67,13 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    @can('manage-users')
+                                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">Liste des utilisateurs</a>
+                                    @endcan
+                                    <a class="dropdown-item" href="{{ route('UlisteMentor.index') }}">Liste des Mentors</a>
+                                    @if (Auth::user()->candidature_mentorer == 0)
+                                    <a class="dropdown-item" href="{{ route('UlisteMentorer.index') }}">Liste des Mentorées</a>
+                                    @endif
                                 </div>
                             </li>
                         @endguest
