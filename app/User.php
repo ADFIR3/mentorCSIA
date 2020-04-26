@@ -45,6 +45,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Competences');
     }
 
+    public function demandes(){
+        return $this->belongsToMany('App\Demandes');
+    }
+
     // Permet de récupérer le nom du rôle (utiliser dans le Provider)
     public function isAdmin(){
         return $this->roles()->where('nom','admin')->first();

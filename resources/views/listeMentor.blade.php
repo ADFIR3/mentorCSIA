@@ -18,30 +18,30 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($user as $use)
+                            @foreach($user as $use)
                             <!-- Permet de savoir si le mentor est disponible -->
                             <!-- Permet de savoir si le mentor a bien fait une candidature pour être mentor -->
                             <!-- Permet de ne pas l'afficher lui même -->
-                            @if ($use->dispo == 1 and $use->candidature_mentor == 1 and $use->email <> Auth::user()->email)
-                            <tr>
-                                <th scope="row">{{ $use->id }}</th>
-                                <td>{{ $use->nom }} </td>
-                                <td>{{ $use->prenom }} </td>
-                                <td>{{ $use->age }} </td>
-                                <td>
-                                    @foreach($competences as $competence)
-                                        @if ($use->competences->pluck('id')->contains($competence->id))
-                                            <label for="{{ $competence->id }}" class="form-check-label">{{ $competence->nom }}</label>
-                                        @endif
-                                    @endforeach
+                                @if ($use->dispo == 1 and $use->candidature_mentor == 1 and $use->email <> Auth::user()->email)
+                                <tr>
+                                    <th scope="row">{{ $use->id }}</th>
+                                    <td><a href="{{ route('user.show', $use->id) }}">{{ $use->nom }} </a></td>
+                                    <td>{{ $use->prenom }} </td>
+                                    <td>{{ $use->age }} </td>
+                                    <td>
+                                        @foreach($competences as $competence)
+                                            @if ($use->competences->pluck('id')->contains($competence->id))
+                                                <label for="{{ $competence->id }}" class="form-check-label">{{ $competence->nom }}</label>
+                                            @endif
+                                         @endforeach
 
-                                </td>
-                                <td>
-                                    <button class="btn btn-success" href="{{ route('password.request') }}">Ajout</button>
-                                </td>
-                            </tr>
-                            @endif
-                        @endforeach
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success" href="{{ route('demandes.creer', $use->id) }}">Ajout</a>
+                                    </td>
+                                </tr>
+                                @endif
+                            @endforeach
                     </table>
 
                 </div>

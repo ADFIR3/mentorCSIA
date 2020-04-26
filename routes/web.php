@@ -31,3 +31,11 @@ Route::name('U')->group(function (){
 Route::name('U')->group(function (){
     Route::resource('listeMentorer', 'listMentorerController');
 });
+
+Route::resource('demandes', 'demandesController');
+
+Route::name('demandes.creer')->group(function () {
+    Route::get('demandes/create/{demande}', 'demandesController@create');
+});
+
+Route::resource('user', 'UserController');

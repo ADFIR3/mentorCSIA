@@ -70,10 +70,10 @@
                                     @can('manage-users')
                                     <a class="dropdown-item" href="{{ route('admin.users.index') }}">Liste des utilisateurs</a>
                                     @endcan
+                                    <a class="dropdown-item" href="{{ route('user.edit', Auth::user()->id) }}">Mon profil</a>
                                     <a class="dropdown-item" href="{{ route('UlisteMentor.index') }}">Liste des Mentors</a>
-                                    @if (Auth::user()->candidature_mentorer == 0)
                                     <a class="dropdown-item" href="{{ route('UlisteMentorer.index') }}">Liste des Mentorées</a>
-                                    @endif
+                                    <a class="dropdown-item" href="{{ route('demandes.index') }}">Mes Demandes</a>
                                 </div>
                             </li>
                         @endguest

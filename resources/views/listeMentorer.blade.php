@@ -19,10 +19,10 @@
                         </thead>
                         <tbody>
                         @foreach($user as $use)
-                            @if ($use->dispo == 1 and $use->candidature_mentorer == 1)
+                            @if ($use->dispo == 1 and $use->candidature_mentorer == 1 and $use->email <> Auth::user()->email)
                             <tr>
                                 <th scope="row">{{ $use->id }}</th>
-                                <td>{{ $use->nom }} </td>
+                                <td><a href="{{ route('user.show', $use->id) }}">{{ $use->nom }} </a> </td>
                                 <td>{{ $use->prenom }} </td>
                                 <td>{{ $use->age }} </td>
                                 <td>
@@ -34,7 +34,7 @@
 
                                 </td>
                                 <td>
-                                    <button class="btn btn-success">Ajout</button>
+                                    <a class="btn btn-success" href="{{ route('demandes.creer', $use->id) }}">Ajout</a>
                                 </td>
                             </tr>
                             @endif

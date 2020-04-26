@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\User;
+use App\Competences;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
-class DemandeController extends Controller
+class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,7 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -46,7 +54,11 @@ class DemandeController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $competences = Competences::all();
+        return view('user.show', [
+            'user' => $user,
+            'competences' => $competences
+        ]);
     }
 
     /**
@@ -57,7 +69,11 @@ class DemandeController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $competences = Competences::all();
+        return view('user.edit', [
+            'user' => $user,
+            'competences' => $competences
+        ]);
     }
 
     /**
@@ -69,7 +85,14 @@ class DemandeController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->competences()->sync($request->competences);
+        $user->nom = $request->nom;
+        $user->prenom = $request->prenom;
+        $user->age = $request->age;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('user.edit', $user->id);
     }
 
     /**
@@ -80,6 +103,13 @@ class DemandeController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if(Gate::denies('delete-users')){
+            return redirect()->route('home');
+        }
+
+        $user->roles()->detach();
+        $user->delete();
+
+        return redirect()->route('admin.users.index');
     }
 }

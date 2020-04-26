@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Competences;
+use App\Demandes;
 use Illuminate\Http\Request;
 
 class listMentorController extends Controller
@@ -12,10 +13,12 @@ class listMentorController extends Controller
     {
         $user = User::all();
         $competences = Competences::all();
+        $demandes = Demandes::all();
 
         return view('listeMentor', [
             'user' => $user,
-            'competences' => $competences
+            'competences' => $competences,
+            'demandes' => $demandes,
         ]);
     }
 
